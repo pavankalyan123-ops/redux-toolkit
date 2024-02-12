@@ -16,12 +16,18 @@ const CartReducer=createSlice({
         },
         deleteFromCart:(state,action)=>{
             let index=state.cartDetails.findIndex(obj=>obj.productName===action.payload.productName);
-            console.log(action.payload.productName)
+            
             if(index>-1)
             {
                 state.cartDetails.splice(index,1);
                 let priceArray=state.cartDetails.map(obj=>+obj.productPrice);
-             state.totalPrice=priceArray.reduce((a,b)=>a+b);
+                
+                if(priceArray.length!==0)
+                {
+                    state.totalPrice=priceArray.reduce((a,b)=>a+b)
+                }else{
+                    state.totalPrice=0;
+                }
             }else{
                 alert("This Product has not been added in your cart")
             }
